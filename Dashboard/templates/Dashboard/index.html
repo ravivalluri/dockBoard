@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "Dashboard/img/favicon.ico" %}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{%  static "Dashboard/img/apple-touch-icon.png" %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static "Dashboard/img/apple-touch-icon-72x72.png" %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static "Dashboard/img/apple-touch-icon-114x114.png" %}">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>DCMP.</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+  <!-- Bootstrap core CSS     -->
+    <link href="{% static 'Dashboard/css/bootstrap.min.css' %}" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="{% static 'Dashboard/css/animate.min.css' %}" rel="stylesheet"/>
+
+    <!--  Paper Dashboard core CSS    -->
+    <link href="{% static 'Dashboard/css/paper-dashboard.css' %}" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="{% static "Dashboard/css/demo.css" %}" rel="stylesheet" />
+
+
+    <!--  Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link href="{% static "Dashboard/css/themify-icons.css" %}" rel="stylesheet">
+    <script src="{% static "Dashboard/js/echarts.min.js" %}"></script>
+</head>
+<body>
+
+
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+    <!--
+		Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+		Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+	-->
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="/dashboard/index" class="simple-text">
+                    DCMP.
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href="/dashboard/index">
+                        <i class="ti-dashboard"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/containers">
+                        <i class="ti-server"></i>
+                        <p>Containers</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/deploy">
+                        <i class="ti-paint-bucket"></i>
+                        <p>Deploy</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/swarm">
+                        <i class="ti-world"></i>
+                        <p>Swarm</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/images">
+                        <i class="ti-paint-roller"></i>
+                        <p>Images</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/volumes">
+                        <i class="ti-book"></i>
+                        <p>Volumes</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/dashboard/networks">
+                        <i class="ti-cloud"></i>
+                        <p>Networks</p>
+                    </a>
+                </li>
+
+                 <li>
+                    <a href="/dashboard/events">
+                        <i class="ti-notepad"></i>
+                        <p>Events</p>
+                    </a>
+                </li>
+
+            </ul>
+    	</div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Dashboard</a>
+
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="ti-bell"></i>
+                                    <p class="notification">
+                                    </p>
+									<p>Notifications</p>
+									<b class="caret"></b>
+                              </a>
+                              <ul class="dropdown-menu">
+{#                                {% if user_last_login %}-->#}
+                                        <li><a style="color:green"> *  Last Login:  &nbsp;  {{  user_last_login }} </a></li>
+{#                                    {% else %}#}
+{#                                    <li><a> * None </a></li>#}
+{#                                {% endif %}#}
+                              </ul>
+                        </li>
+
+
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="ti-user"></i>
+                                    <p class="notification">
+                                    </p>
+									<p>User: {{ user }}</p>
+									<b class="caret"></b>
+                              </a>
+                              <ul class="dropdown-menu">
+                                  <li>
+                                        <a href="/dashboard/settings">
+								            <i class="ti-settings"> Settings</i>
+                                        </a>
+                                  </li>
+                                  <li>
+                                       <a href="/dashboard/logout">
+                                            <i class="ti-close"> Logout</i>
+
+                                       </a>
+                                  </li>
+                              </ul>
+                        </li>
+
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+       <div class="container"><br></div>
+            <div class="container-fluid ">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-warning text-center">
+                                            <i class="ti-panel"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p>Containers</p>
+                                            <a><div id="con_num">{{ sysinfo.con_num | default:0 }} </div></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-success text-center">
+                                            <i class="ti-pie-chart"></i>
+                                        </div>
+                                    </div>
+                                     <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p>CPU Using:</p>
+
+                                            <a><div id="cpu_per">N/A</div></a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-danger text-center">
+                                            <i class="ti-pulse"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p>Memory Using:</p>
+                                            <a><div id="mem_per">N/A</div></a>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-info text-center">
+                                            <i class="ti-shield"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p>Uptime</p>
+                                            <a>{{ sysinfo.uptime | default:"(N/A)" }} Hours</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <div class="card">
+                            <div class="header">
+                                <h5 class="title">Docker information</h5>
+                                <p class="category" >Localhost & Swarm performance:</p>
+                                </br>
+                            </div>
+                            <div class="content">
+                                <p>Docker Version:  {{ sysinfo.con_ver }} &emsp;  </p>
+                                <p> Arch: {{ sysinfo.con_arch }} &emsp; OS: {{ sysinfo.con_os }} &emsp; CPU Core:{{ sysinfo.cpu_num }}  &emsp; Thread:{{ sysinfo.cpu_Lnum }}</p>
+                                <p>Swarm Status: {{ sysinfo.swarm_stat }} &emsp; Swarm Node: {{ sysinfo.swarm_num }} &emsp; Swarm IP:{{ sysinfo.swarm_addr }}</p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="col-md-6 ">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Docker Containers Status:</h4>
+                                 <p class="category" >Localhost performance:</p>
+                            </div>
+                            <div class="container">
+                            <div class="content">
+                    <div class="container col-md-pull" >
+                        <div class="col-lg-2 col-sm-2 center">
+                            <div class="card">
+                                <div class="content">
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <div class="icon-big icon-success text-center">
+                                                <i class="ti-rocket"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="numbers">
+                                                <p> Running:</p>
+                                                <a>{{ con_run | default:0 }} </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-2 col-sm-2 ">
+                            <div class="card">
+                                <div class="content">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="icon-big icon-warning text-center">
+                                                <i class="ti-close"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="numbers">
+                                                <p> Paused:</p>
+                                                <a>{{ con_pause | default:0 }} </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-2 col-sm-2">
+                            <div class="card">
+                                <div class="content">
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <div class="icon-big icon-danger text-center">
+                                                <i class="ti-alert"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="numbers">
+                                                <p> Stopped:</p>
+                                                <a>{{ con_stop | default:0 }} </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Memory Status</h4>
+                                <p class="category">24 Hours performance</p>
+                            </div>
+                            <div class="content">
+                                 <div id="mem" style="width: 600px;height:400px;"></div>
+                                <script>
+                                echarts.init(document.getElementById('mem'),).setOption({
+                                    tooltip : {
+                                    trigger: 'item',
+
+                                        formatter: "{a} <br/>{b} : {c} MB ({d}%)"
+                                    },
+                                     series : [
+                                    {
+                                        name: 'Memory',
+                                        type: 'pie',
+                                        radius: '85%',
+                                        roseType: 'angle',
+
+                                        data:[
+                                            {value:{{ sysinfo.mem_used }}, name:'Memory used'},
+                                            {value:{{ sysinfo.swap_used }}, name:'Swap used'},
+                                            {value:{{ sysinfo.mem_free }}, name:'Memory free'},
+                                            {value:{{ sysinfo.swap_free }}, name:'Swap Free'}
+                                            ]
+                                    }
+                                    ]}
+                                    );
+                                </script>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Network Status</h4>
+                                <p class="category">24 Hours performance</p>
+                            </div>
+                            <div class="content">
+                                 <div id="cpu" style="width: 600px;height:400px;"></div>
+                                <script>
+                                echarts.init(document.getElementById('cpu')).setOption({
+                                        tooltip: {
+                                        trigger: 'item',
+                                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                                        },
+                                        legend: {
+                                            orient: 'vertical',
+                                            x: 'left',
+                                            data:['Send Packages','Receive Packages']
+                                        },
+                                        series: [
+                                        {
+                                            name:'Network Status',
+                                            type:'pie',
+                                            radius: ['70%', '90%'],
+                                            avoidLabelOverlap: false,
+                                            label: {
+                                                normal: {
+                                                    show: false,
+                                                    position: 'center'
+                                                },
+                                                emphasis: {
+                                                    show: true,
+                                                    textStyle: {
+                                                        fontSize: '30',
+                                                        fontWeight: 'bold'
+                                                    }
+                                                }
+                                                },
+                                            labelLine: {
+                                                normal: {
+                                                    show: false
+                                                }
+                                                },
+                                            data:[
+                                                {value:{{ sysinfo.net_send }}, name:'Send Packages'},
+                                                {value: {{ sysinfo.net_recv }}, name:'Receive Packages'}
+                                                ]
+                                        }]}
+                                    );
+                                </script>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+
+                        <li>
+                            <a href="/">
+                                DCMP.
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright pull-right">
+                    Copyright &copy; DCMP 2018 .Company  All rights reserved.<a target="_blank" href="http://geekfan.top/">Funky's Blog</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</div>
+
+
+</body>
+
+   <!--   Core JS Files   -->
+    <script src="{% static 'Dashboard/js/jquery-1.10.2.js'  %}" type="text/javascript"></script>
+	<script src="{% static 'Dashboard/js/bootstrap.min.js' %}" type="text/javascript"></script>
+
+	<!--  Checkbox, Radio & Switch Plugins -->
+	<script src="{% static "Dashboard/js/bootstrap-checkbox-radio.js" %}"></script>
+
+	<!--  Charts Plugin-->
+	<script src="{% static "Dashboard/js/chartist.min.js" %}"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="{% static "Dashboard/js/bootstrap-notify.js" %}"></script>
+
+
+    <!--  Google Maps Plugin    -->
+    <!---<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>--->
+
+    <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+	<script src="{% static "Dashboard/js/paper-dashboard.js" %}"></script>
+    <script type="text/javascript">
+        $(setInterval(function update_con_num() {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                document.getElementById("con_num").innerHTML = xmlhttp.responseText;
+            };
+            xmlhttp.open("GET", "/dashboard/con_num", false);
+            xmlhttp.send();
+        },2000)
+        );
+    </script>
+    <script type="text/javascript">
+        $(setInterval(function update_cpu_per() {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                document.getElementById("cpu_per").innerHTML = xmlhttp.responseText;
+            };
+            xmlhttp.open("GET", "/dashboard/cpu_per", false);
+            xmlhttp.send();
+        },2000)
+        );
+    </script>
+
+    <script type="text/javascript">
+        $(setInterval(function update_mem_per() {
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                document.getElementById("mem_per").innerHTML = xmlhttp.responseText;
+            };
+            xmlhttp.open("GET", "/dashboard/mem_per", false);
+            xmlhttp.send();
+        },2000)
+        );
+    </script>
+	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+	<script src="{% static "Dashboard/js/demo.js" %}"></script>
+    {% if messages %}
+    {% for message in messages %}
+    <script type="text/javascript">
+    	$(document).ready(function(){
+        	demo.initChartist();
+        	$.notify({
+            	icon: 'ti-gift',
+            	message: "{{ message }}"
+            },{
+                type: '{{ message.tags }}',
+                timer: 4000
+            });
+    	});
+	</script>
+    {% endfor %}
+    {% endif %}
+</html>
